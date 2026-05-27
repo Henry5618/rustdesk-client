@@ -80,16 +80,32 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     final isIncomingOnly = bind.isIncomingOnly();
     final isOutgoingOnly = bind.isOutgoingOnly();
     final children = <Widget>[
+      
+      // --- INÍCIO DA LOGO DA ESSYSTEM ---
+      Container(
+        padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+        alignment: Alignment.center,
+        child: Image.asset(
+          'assets/banner.png', 
+          height: 80, // Você pode aumentar ou diminuir a altura da logo aqui
+          fit: BoxFit.contain,
+        ),
+      ),
+      // --- FIM DA LOGO DA ESSYSTEM ---
+
       if (!isOutgoingOnly) buildPresetPasswordWarning(),
       if (bind.isCustomClient())
         Align(
           alignment: Alignment.center,
           child: loadPowered(context),
         ),
-      Align(
-        alignment: Alignment.center,
-        child: loadLogo(),
-      ),
+      
+      // DESATIVANDO A LOGO ANTIGA PADRÃO:
+      // Align(
+      //   alignment: Alignment.center,
+      //   child: loadLogo(),
+      // ),
+      
       buildTip(context),
       if (!isOutgoingOnly) buildIDBoard(context),
       if (!isOutgoingOnly) buildPasswordBoard(context),
