@@ -406,12 +406,12 @@ class _DesktopHomePageState extends State<DesktopHomePage>
                         //            : Color(0xFFDDDDDD),
                         //        size: 22,
                         //      ).marginOnly(right: 8, top: 4),
-                            ),
-                          ),
-                          onTap: () => DesktopSettingPage.switch2page(
-                              SettingsTabKey.safety),
-                          onHover: (value) => editHover.value = value,
-                        ),
+                        //    ),
+                        //  ),
+                        //  onTap: () => DesktopSettingPage.switch2page(
+                        //      SettingsTabKey.safety),
+                        //  onHover: (value) => editHover.value = value,
+                        //),
                     ],
                   ),
                 ],
