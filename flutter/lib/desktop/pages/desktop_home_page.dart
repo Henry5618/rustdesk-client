@@ -109,6 +109,25 @@ class _DesktopHomePageState extends State<DesktopHomePage>
       buildTip(context),
       if (!isOutgoingOnly) buildIDBoard(context),
       if (!isOutgoingOnly) buildPasswordBoard(context),
+      const SizedBox(height: 20),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ElevatedButton.icon(
+          onPressed: () {
+            final id = gFFI.serverModel.serverId.text;
+            final pwd = gFFI.serverModel.serverPasswd.text;
+            Clipboard.setData(ClipboardData(text: "ID: $id\nSenha: $pwd"));
+            showToast("Copiado com sucesso!");
+          },
+          icon: const Icon(Icons.copy, size: 18),
+          label: const Text("Copiar ID e Senha"),
+          style: ElevatedButton.styleFrom(
+            minimumSize: const Size(double.infinity, 45),
+            backgroundColor: const Color(0xFF2F65BA),
+            foregroundColor: Colors.white,
+          ),
+        ),
+      ),
       FutureBuilder<Widget>(
         future: Future.value(
             Obx(() => buildHelpCards(stateGlobal.updateUrl.value))),
@@ -238,7 +257,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
                                   ?.color
                                   ?.withOpacity(0.5)),
                         ).marginOnly(top: 5),
-                        buildPopupMenu(context)
+                      //  buildPopupMenu(context)
                       ],
                     ),
                   ),
@@ -358,35 +377,35 @@ class _DesktopHomePageState extends State<DesktopHomePage>
                           ).workaroundFreezeLinuxMint(),
                         ),
                       ),
-                      if (showOneTime)
-                        AnimatedRotationWidget(
-                          onPressed: () => bind.mainUpdateTemporaryPassword(),
-                          child: Tooltip(
-                            message: translate('Refresh Password'),
-                            child: Obx(() => RotatedBox(
-                                quarterTurns: 2,
-                                child: Icon(
-                                  Icons.refresh,
-                                  color: refreshHover.value
-                                      ? textColor
-                                      : Color(0xFFDDDDDD),
-                                  size: 22,
-                                ))),
-                          ),
-                          onHover: (value) => refreshHover.value = value,
-                        ).marginOnly(right: 8, top: 4),
-                      if (!bind.isDisableSettings())
-                        InkWell(
-                          child: Tooltip(
-                            message: translate('Change Password'),
-                            child: Obx(
-                              () => Icon(
-                                Icons.edit,
-                                color: editHover.value
-                                    ? textColor
-                                    : Color(0xFFDDDDDD),
-                                size: 22,
-                              ).marginOnly(right: 8, top: 4),
+                      //if (showOneTime)
+                        //AnimatedRotationWidget(
+                        //  onPressed: () => bind.mainUpdateTemporaryPassword(),
+                        //  child: Tooltip(
+                        //    message: translate('Refresh Password'),
+                        //    child: Obx(() => RotatedBox(
+                        //        quarterTurns: 2,
+                        //        child: Icon(
+                        //         Icons.refresh,
+                        //          color: refreshHover.value
+                        //              ? textColor
+                        //              : Color(0xFFDDDDDD),
+                        //          size: 22,
+                        //        ))),
+                        //  ),
+                        //  onHover: (value) => refreshHover.value = value,
+                        //).marginOnly(right: 8, top: 4),
+                      //if (!bind.isDisableSettings())
+                        //InkWell(
+                        //  child: Tooltip(
+                        //    message: translate('Change Password'),
+                        //    child: Obx(
+                        //      () => Icon(
+                        //        Icons.edit,
+                        //        color: editHover.value
+                        //            ? textColor
+                        //            : Color(0xFFDDDDDD),
+                        //        size: 22,
+                        //      ).marginOnly(right: 8, top: 4),
                             ),
                           ),
                           onTap: () => DesktopSettingPage.switch2page(
@@ -415,11 +434,27 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         children: [
           Column(
             children: [
+              
+              // --- NOVO TÍTULO DA ESSYSTEM AQUI ---
               if (!isOutgoingOnly)
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    translate("Your Desktop"),
+                    "ESSystem Suporte Remoto",
+                    style: TextStyle(
+                      fontSize: 14, 
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF2F65BA), // Cor azul para dar destaque
+                    ),
+                  ).marginOnly(bottom: 4),
+                ),
+              // --- FIM DO NOVO TÍTULO ---
+
+              if (!isOutgoingOnly)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    translate("Permitir controle remoto"),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
@@ -430,7 +465,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
           ),
           if (!isOutgoingOnly)
             Text(
-              translate("desk_tip"),
+              translate("Por favor, envie sua ID e SENHA para que um técnico possa lhe auxiliar."),
               overflow: TextOverflow.clip,
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -446,6 +481,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   }
 
   Widget buildHelpCards(String updateUrl) {
+    return const SizedBox.shrink();
     if (!bind.isCustomClient() &&
         updateUrl.isNotEmpty &&
         !isCardClosed &&
@@ -713,7 +749,22 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   @override
   void initState() {
     super.initState();
-    _updateTimer = periodic_immediate(const Duration(seconds: 1), () async {
+      
+      // Travando o tamanho da janela do Suporte
+
+      windowManager.setSize(const Size(380, 600));
+      windowManager.setResizable(false);
+      
+      // ...
+
+      // --- INÍCIO DA INJEÇÃO DE IP E CHAVE ---
+      Future.microtask(() async {
+        await bind.mainSetOption(key: 'custom-rendezvous-server', value: '191.101.235.27');
+        await bind.mainSetOption(key: 'custom-key', value: '1yG9v8DED7rbLwf4bGl86hh8ZGs8klibiawyp4DwI2A=');
+      });
+      // --- FIM DA INJEÇÃO DE IP E CHAVE ---
+
+      _updateTimer = periodic_immediate(const Duration(seconds: 1), () async {
       await gFFI.serverModel.fetchID();
       final error = await bind.mainGetError();
       if (systemError != error) {
