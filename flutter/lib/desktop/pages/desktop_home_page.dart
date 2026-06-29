@@ -750,17 +750,19 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   void initState() {
     super.initState();
       
-      // Travando o tamanho da janela do Suporte
-
-      windowManager.setSize(const Size(380, 600));
+      // Travando o tamanho da janela do Suporte (min = max = tamanho fixo)
+      const supportWindowSize = Size(380, 600);
+      windowManager.setSize(supportWindowSize);
+      windowManager.setMinimumSize(supportWindowSize);
+      windowManager.setMaximumSize(supportWindowSize);
       windowManager.setResizable(false);
-      
-      // ...
 
-      // --- INÍCIO DA INJEÇÃO DE IP E CHAVE ---
+      // --- INÍCIO DA INJEÇÃO DE IP E CHAVE (reforço em runtime) ---
+      // O default de compilação fica em libs/hbb_common/src/config.rs.
+      // Aqui apenas reforçamos caso a config local tenha sido alterada.
       Future.microtask(() async {
         await bind.mainSetOption(key: 'custom-rendezvous-server', value: '191.101.235.27');
-        await bind.mainSetOption(key: 'custom-key', value: '1yG9v8DED7rbLwf4bGl86hh8ZGs8klibiawyp4DwI2A=');
+        await bind.mainSetOption(key: 'key', value: '1yG9v8DED7rbLwf4bGl86hh8ZGs8klibiawyp4DwI2A=');
       });
       // --- FIM DA INJEÇÃO DE IP E CHAVE ---
 
