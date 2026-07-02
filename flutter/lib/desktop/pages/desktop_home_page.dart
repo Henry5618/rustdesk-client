@@ -128,6 +128,41 @@ class _DesktopHomePageState extends State<DesktopHomePage>
           ),
         ),
       ),
+      // ESSystem: indicador "Pronto para conexão" (estilo TeamViewer)
+      const SizedBox(height: 16),
+      Obx(() {
+        final ready = !svcStopped.value &&
+            stateGlobal.svcStatus.value == SvcStatus.ready;
+        final connecting = !svcStopped.value &&
+            stateGlobal.svcStatus.value == SvcStatus.connecting;
+        final color = ready
+            ? const Color.fromARGB(255, 50, 190, 166)
+            : (connecting ? kColorWarn : const Color.fromARGB(255, 224, 79, 95));
+        final msg = svcStopped.value
+            ? "Serviço parado"
+            : ready
+                ? "Pronto para conexão (conexão segura)"
+                : connecting
+                    ? "Conectando..."
+                    : "Não conectado";
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 9,
+              width: 9,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: color,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(msg, style: const TextStyle(fontSize: 13)),
+            ),
+          ],
+        ).paddingSymmetric(horizontal: 20);
+      }),
       FutureBuilder<Widget>(
         future: Future.value(
             Obx(() => buildHelpCards(stateGlobal.updateUrl.value))),
@@ -778,6 +813,18 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         svcStopped.value = v;
         setState(() {});
       }
+      // ESSystem: status de conexão (pronto / conectando / offline)
+      try {
+        final status =
+            jsonDecode(await bind.mainGetConnectStatus()) as Map<String, dynamic>;
+        final statusNum = status['status_num'] as int;
+        final newStatus = statusNum == 0
+            ? SvcStatus.connecting
+            : (statusNum == 1 ? SvcStatus.ready : SvcStatus.notReady);
+        if (stateGlobal.svcStatus.value != newStatus) {
+          stateGlobal.svcStatus.value = newStatus;
+        }
+      } catch (_) {}
       if (watchIsCanScreenRecording) {
         if (bind.mainIsCanScreenRecording(prompt: false)) {
           watchIsCanScreenRecording = false;
