@@ -786,7 +786,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     super.initState();
       
       // Travando o tamanho da janela do Suporte (min = max = tamanho fixo)
-      const supportWindowSize = Size(380, 600);
+      const supportWindowSize = Size(380, 560);
       windowManager.setSize(supportWindowSize);
       windowManager.setMinimumSize(supportWindowSize);
       windowManager.setMaximumSize(supportWindowSize);
