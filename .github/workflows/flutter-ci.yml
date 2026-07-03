@@ -1,21 +1,9 @@
 name: Full Flutter CI
 
 on:
+  # ESSystem: apenas disparo manual (gatilhos push/pull_request desativados
+  # para nao rodar a matriz completa a cada push no master).
   workflow_dispatch:
-  pull_request:
-    paths-ignore:
-    - "docs/**"
-    - "README.md"
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - ".github/**"
-      - "docs/**"
-      - "README.md"
-      - "res/**"
-      - "appimage/**"
-      - "flatpak/**"
 
 jobs:
   run-ci:
