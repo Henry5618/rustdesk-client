@@ -64,10 +64,10 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ESSystem: painel ocupa a janela inteira (sem faixa morta a direita)
-        Expanded(child: buildLeftPane(context)),
-      //  if (!isIncomingOnly) const VerticalDivider(width: 1),
-      //  if (!isIncomingOnly) Expanded(child: buildRightPane(context)),
+        // ESSystem Tecnico: painel esquerdo (ID proprio) + painel de conexao
+        buildLeftPane(context),
+        if (!isIncomingOnly) const VerticalDivider(width: 1),
+        if (!isIncomingOnly) Expanded(child: buildRightPane(context)),
       ],
     ));
   }
@@ -202,7 +202,8 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     return ChangeNotifierProvider.value(
       value: gFFI.serverModel,
       child: Container(
-        // ESSystem: largura vem do Expanded no build() (janela inteira)
+        // ESSystem Tecnico: 280px para caber botao copiar + status
+        width: 280.0,
         color: Theme.of(context).colorScheme.background,
         child: Stack(
           children: [
@@ -790,12 +791,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   void initState() {
     super.initState();
       
-      // Travando o tamanho da janela do Suporte (min = max = tamanho fixo)
-      const supportWindowSize = Size(330, 480);
-      windowManager.setSize(supportWindowSize);
-      windowManager.setMinimumSize(supportWindowSize);
-      windowManager.setMaximumSize(supportWindowSize);
-      windowManager.setResizable(false);
+      // ESSystem Tecnico: janela normal e redimensionavel (sem trava de tamanho).
 
       // --- INÍCIO DA INJEÇÃO DE IP E CHAVE (reforço em runtime) ---
       // O default de compilação fica em libs/hbb_common/src/config.rs.
