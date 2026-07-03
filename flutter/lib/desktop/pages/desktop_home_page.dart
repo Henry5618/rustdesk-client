@@ -462,22 +462,23 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     final isOutgoingOnly = bind.isOutgoingOnly();
     return Padding(
       padding:
-          const EdgeInsets.only(left: 20.0, right: 16, top: 16.0, bottom: 5),
+          const EdgeInsets.only(left: 16.0, right: 16, top: 16.0, bottom: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
             children: [
-              
+
               // --- NOVO TÍTULO DA ESSYSTEM AQUI ---
               if (!isOutgoingOnly)
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     "ESSystem Suporte Remoto",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14, 
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF2F65BA), // Cor azul para dar destaque
                     ),
@@ -487,9 +488,10 @@ class _DesktopHomePageState extends State<DesktopHomePage>
 
               if (!isOutgoingOnly)
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
                     translate("Permitir controle remoto"),
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
@@ -501,12 +503,14 @@ class _DesktopHomePageState extends State<DesktopHomePage>
           if (!isOutgoingOnly)
             Text(
               translate("Por favor, envie sua ID e SENHA para que um técnico possa lhe auxiliar."),
+              textAlign: TextAlign.center,
               overflow: TextOverflow.clip,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           if (isOutgoingOnly)
             Text(
               translate("outgoing_only_desk_tip"),
+              textAlign: TextAlign.center,
               overflow: TextOverflow.clip,
               style: Theme.of(context).textTheme.bodySmall,
             ),
@@ -786,8 +790,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     super.initState();
       
       // Travando o tamanho da janela do Suporte (min = max = tamanho fixo)
-      // Proporcao no padrao TeamViewer (mais largo e baixo).
-      const supportWindowSize = Size(400, 460);
+      const supportWindowSize = Size(370, 560);
       windowManager.setSize(supportWindowSize);
       windowManager.setMinimumSize(supportWindowSize);
       windowManager.setMaximumSize(supportWindowSize);
