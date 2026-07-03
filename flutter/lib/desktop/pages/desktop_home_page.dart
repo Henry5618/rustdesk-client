@@ -64,7 +64,8 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildLeftPane(context),
+        // ESSystem: painel ocupa a janela inteira (sem faixa morta a direita)
+        Expanded(child: buildLeftPane(context)),
       //  if (!isIncomingOnly) const VerticalDivider(width: 1),
       //  if (!isIncomingOnly) Expanded(child: buildRightPane(context)),
       ],
@@ -201,7 +202,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     return ChangeNotifierProvider.value(
       value: gFFI.serverModel,
       child: Container(
-        width: isIncomingOnly ? 280.0 : 200.0,
+        // ESSystem: largura vem do Expanded no build() (janela inteira)
         color: Theme.of(context).colorScheme.background,
         child: Stack(
           children: [
