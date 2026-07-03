@@ -87,7 +87,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         alignment: Alignment.center,
         child: Image.asset(
           'assets/banner.png',
-          height: 62, // Você pode aumentar ou diminuir a altura da logo aqui
+          height: 70, // Você pode aumentar ou diminuir a altura da logo aqui
           fit: BoxFit.contain,
         ),
       ),
@@ -790,7 +790,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     super.initState();
       
       // Travando o tamanho da janela do Suporte (min = max = tamanho fixo)
-      const supportWindowSize = Size(370, 560);
+      const supportWindowSize = Size(330, 480);
       windowManager.setSize(supportWindowSize);
       windowManager.setMinimumSize(supportWindowSize);
       windowManager.setMaximumSize(supportWindowSize);
