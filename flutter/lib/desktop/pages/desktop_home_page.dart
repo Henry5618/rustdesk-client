@@ -83,11 +83,11 @@ class _DesktopHomePageState extends State<DesktopHomePage>
       
       // --- INÍCIO DA LOGO DA ESSYSTEM ---
       Container(
-        padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+        padding: const EdgeInsets.only(top: 10.0, bottom: 6.0),
         alignment: Alignment.center,
         child: Image.asset(
-          'assets/banner.png', 
-          height: 80, // Você pode aumentar ou diminuir a altura da logo aqui
+          'assets/banner.png',
+          height: 62, // Você pode aumentar ou diminuir a altura da logo aqui
           fit: BoxFit.contain,
         ),
       ),
@@ -109,7 +109,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
       buildTip(context),
       if (!isOutgoingOnly) buildIDBoard(context),
       if (!isOutgoingOnly) buildPasswordBoard(context),
-      const SizedBox(height: 20),
+      const SizedBox(height: 10),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ElevatedButton.icon(
@@ -786,7 +786,8 @@ class _DesktopHomePageState extends State<DesktopHomePage>
     super.initState();
       
       // Travando o tamanho da janela do Suporte (min = max = tamanho fixo)
-      const supportWindowSize = Size(380, 560);
+      // Proporcao no padrao TeamViewer (mais largo e baixo).
+      const supportWindowSize = Size(400, 460);
       windowManager.setSize(supportWindowSize);
       windowManager.setMinimumSize(supportWindowSize);
       windowManager.setMaximumSize(supportWindowSize);
