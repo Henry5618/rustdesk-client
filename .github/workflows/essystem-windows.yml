@@ -203,9 +203,20 @@ jobs:
           name: topmostwindow-artifacts
           path: "./rustdesk"
 
+      - name: Rename executable (ESSystem branding)
+        shell: bash
+        run: |
+          if [ "${{ github.ref_name }}" = "tecnico" ]; then
+            NEW="ESSystem-Tecnico.exe"
+          else
+            NEW="ESSystem-Cliente.exe"
+          fi
+          cp "./rustdesk/rustdesk.exe" "./rustdesk/${NEW}"
+          echo "Executavel de marca criado: ${NEW}"
+
       - name: Upload unsigned (portable)
         if: env.UPLOAD_ARTIFACT == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: rustdesk-unsigned-windows-${{ matrix.job.arch }}
+          name: essystem-${{ github.ref_name == 'tecnico' && 'tecnico' || 'cliente' }}-windows-${{ matrix.job.arch }}
           path: rustdesk
