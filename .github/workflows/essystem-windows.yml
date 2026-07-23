@@ -211,8 +211,9 @@ jobs:
           else
             NEW="ESSystem-Cliente.exe"
           fi
-          cp "./rustdesk/rustdesk.exe" "./rustdesk/${NEW}"
-          echo "Executavel de marca criado: ${NEW}"
+          mv "./rustdesk/rustdesk.exe" "./rustdesk/${NEW}"
+          echo "Executavel renomeado para: ${NEW}"
+          ls -l ./rustdesk/*.exe
 
       - name: Upload unsigned (portable)
         if: env.UPLOAD_ARTIFACT == 'true'
