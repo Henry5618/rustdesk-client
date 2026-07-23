@@ -124,11 +124,3 @@ Armadilhas conhecidas:
 Backup diário de `/opt/rustdesk/data` (chave privada + banco de usuários e catálogo)
 via cron. **Copie os arquivos para fora do servidor periodicamente** — backup local
 não protege contra perda da instância.
-
----
-
-## Pendências
-
-- [ ] Assinatura digital do executável (SmartScreen alerta em binário não assinado)
-- [ ] Web Client V2 (`/webclient2/` retorna 404 — arquivos não presentes na imagem)
-- [ ] Avaliar subdomínio dedicado para ID/relay, separado do painel
